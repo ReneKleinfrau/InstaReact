@@ -14,7 +14,7 @@ In InstaReact.vb you can edit all settings easily
 ```vb.net
     Public UserNameInsta As String = ""
     Public PasswordInsta As String = ""
-    Private ProfileToUse As String = "Profilename"
+    Private ProfileToUse As String = "Profilename" 'If you want to keep logged in, you can use chrome profiles
     Private DoLike As Boolean = True 
     Private DoFollow As Boolean = True
     Private DoComment As Boolean = True
