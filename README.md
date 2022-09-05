@@ -1,6 +1,8 @@
 # InstaReact
 InstaReact is a Selenium-based Console-Application for Like/Follow/Comment Automation on Instagram      
 
+![Console output](https://i.imgur.com/7WnGkcn.png "Console output")
+
 ## Installation
 
 Once you opened the project you have to install the Selenium NuGet-Package
