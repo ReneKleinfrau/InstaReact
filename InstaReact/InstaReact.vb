@@ -1,4 +1,4 @@
-﻿Option Strict On
+Option Strict On
 Imports System.IO
 Imports System.Windows.Forms
 Imports OpenQA.Selenium
@@ -9,19 +9,18 @@ Module InstaReact
     '' You have to edit this part
     Public UserNameInsta As String = ""
     Public PasswordInsta As String = ""
-    Private ProfileToUse As String = "Travelspots" 'A Chromeprofile will get created and used to keep your cookies- Empty or "UseBlankProfile = False" to don't use a profile
+    Private ProfileToUse As String = "Bot" 'A Chromeprofile will get created and used to keep your cookies- Empty or "UseBlankProfile = False" to don't use a profile
     Private DoLike As Boolean = True 'If the bot should like posts
     Private DoFollow As Boolean = True 'If the bot should follow accounts
     Private DoComment As Boolean = True 'If the bot should write comments
     Private UseBlankProfile As Boolean = False 'If you don't want to stay logged in
     Private RunWithoutChrome As Boolean = False 'Headlessmode
-    Public ChanceToLike As Integer = 70 'In % (0-100)
-    Public ChanceToFollow As Integer = 40 'In % (0-100)
+    Public ChanceToLike As Integer = 80 'In % (0-100)
+    Public ChanceToFollow As Integer = 60 'In % (0-100)
     Public ChanceToComment As Integer = 60 'In % (0-100)
-    Private HashTags() As String = {"dog", "cat", "animals"}
-    Private Comments() As String = {"Very nice!", "Love this :D", "Cute!"}
+    Private HashTags() As String = {"Dogs", "Cats", "Animals"}
+    Private Comments() As String = {"Love this!", "So cute!", "This is not a bot!"}
     '' Edit finished
-
 
     ''' Don't touch this part if you don't know what you do
     Public Login As New System.Timers.Timer
@@ -30,7 +29,7 @@ Module InstaReact
     Public CookieKiller As New System.Timers.Timer
     Public NavigateToFirst As New System.Timers.Timer
     Private BotStuff As New System.Timers.Timer
-    Private CommentPoster As New System.Timers.Timer
+    Public CommentPoster As New System.Timers.Timer
     Public lbFoundPosts As New ListBox
     Public ChanceForLike As New List(Of String)
     Public ChanceForFollow As New List(Of String)
@@ -38,10 +37,11 @@ Module InstaReact
     Public LikesDone As Integer = 0
     Public FollowsDone As Integer = 0
     Public CommentsDone As Integer = 0
+    Public TimeOutTry As Integer = 0
     Private HashTagToUse As String = "" 'Dont touch - Use The Comments() Array
     Public Bot As IWebDriver
     Private AllOptions As New ChromeOptions
-    Public Time As String = DateTime.Now.ToString("dd/MM/yyyy HH:mm") & ": "
+    Public Time As String = " " & DateTime.Now.ToString("dd/MM/yyyy HH:mm") & ": "
 
 
 
@@ -118,6 +118,7 @@ Module InstaReact
         DetectAndRemoveNotifyPopUp()
     End Sub
 
+
     Private Sub NavigateToFirstTick(ByVal sender As Object, ByVal e As System.Timers.ElapsedEventArgs)
         If (lbFoundPosts.Items.Count > 0) Then
             lbFoundPosts.SelectedIndex = 0
@@ -150,8 +151,8 @@ Module InstaReact
         CalculateChanceForFollow()
 
         If (CheckIfFollowButtonIsVisible() = True) Then 'Wait for the followbutton
-
-            If (DoLike = True) Then 'Button direct: <button class="_abl-" type="button"><div class="_abm0 _abm1"
+            TimeOutTry = 0
+            If (DoLike = True) Then
                 If (ChanceForLike(GetRandom(1, 100)) = "True") Then
                     LikePost()
                 Else
@@ -159,7 +160,7 @@ Module InstaReact
                 End If
             End If
 
-            If (DoFollow = True) Then 'Button Class above: <button class="_acan _acao _acas" type="button"><div class="_ab8w  _ab94 _ab99 _ab9h
+            If (DoFollow = True) Then
                 If (ChanceForFollow(GetRandom(1, 100)) = "True") Then
                     FollowAccount()
                 Else
@@ -174,6 +175,15 @@ Module InstaReact
                 NavigateToFirst.Enabled = True
                 BotStuff.Enabled = False
             End If
+
+        Else
+            TimeOutTry = TimeOutTry + 1
+        End If
+
+        If (TimeOutTry = 5) Then 'Move on if the followbutton cannot be found within 5 Tries.
+            Console.WriteLine(Time & "Could not find the follow-button (collab?). Skipped")
+            NavigateToFirst.Enabled = True
+            BotStuff.Enabled = False
         End If
 
     End Sub
@@ -186,15 +196,14 @@ Module InstaReact
         For ChanceForCommentFalse As Integer = 1 To 100 - ChanceToComment
             ChanceForComment.Add("False")
         Next
-        If (DoComment = True) Then
-            If (ChanceForComment(GetRandom(1, 100)) = "True") Then
-                Dim CommentToPost As String = GetRandomEntry(Comments)
-                PostComment(CommentToPost)
-            Else
-                NavigateToFirst.Enabled = True
-                CommentPoster.Enabled = False
-                Console.WriteLine(Time & "Skipped Comment (Because of chance)")
-            End If
+
+        If (ChanceForComment(GetRandom(1, 100)) = "True") Then
+            Dim CommentToPost As String = GetRandomEntry(Comments)
+            PostComment(CommentToPost)
+        Else
+            Console.WriteLine(Time & "Skipped Comment (Because of chance)")
+            NavigateToFirst.Enabled = True
+            CommentPoster.Enabled = False
         End If
     End Sub
 
@@ -212,7 +221,7 @@ Module InstaReact
         AddHandler NavigateToHash.Elapsed, AddressOf NavigateToHashTick
 
         CookieKiller.AutoReset = True
-        CookieKiller.Interval = 1000
+        CookieKiller.Interval = 2000
         AddHandler CookieKiller.Elapsed, AddressOf CookieKillerTick
 
         NavigateToFirst.AutoReset = True
@@ -259,9 +268,18 @@ Module InstaReact
         Bot.Navigate().GoToUrl("https://www.instagram.com/")
 
         Console.Clear()
+        Console.ForegroundColor = ConsoleColor.Magenta
+        Console.WriteLine("")
+        Console.WriteLine(" ██╗███╗   ██╗███████╗████████╗ █████╗ ██████╗ ███████╗ █████╗  ██████╗████████╗")
+        Console.WriteLine(" ██║████╗  ██║██╔════╝╚══██╔══╝██╔══██╗██╔══██╗██╔════╝██╔══██╗██╔════╝╚══██╔══╝")
+        Console.WriteLine(" ██║██╔██╗ ██║███████╗   ██║   ███████║██████╔╝█████╗  ███████║██║        ██║   ")
+        Console.WriteLine(" ██║██║╚██╗██║╚════██║   ██║   ██╔══██║██╔══██╗██╔══╝  ██╔══██║██║        ██║   ")
+        Console.WriteLine(" ██║██║ ╚████║███████║   ██║   ██║  ██║██║  ██║███████╗██║  ██║╚██████╗   ██║   ")
+        Console.WriteLine(" ╚═╝╚═╝  ╚═══╝╚══════╝   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝ ╚═════╝   ╚═╝   ")
+        Console.WriteLine("")
         Console.ForegroundColor = ConsoleColor.Cyan
-        Console.WriteLine("[V0.0.1a]InstaReact has been started")
-        Console.WriteLine("--------------------------------------------------------------------")
+        Console.WriteLine(" [V0.0.2a]InstaReact has been started")
+        Console.WriteLine(" --------------------------------------------------------------------")
         Console.ResetColor()
         Console.WriteLine(Time & "Bot is running...")
 
