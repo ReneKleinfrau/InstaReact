@@ -1,4 +1,4 @@
-﻿Imports System.IO
+Imports System.IO
 Imports OpenQA.Selenium
 
 Module Utilities
@@ -141,8 +141,9 @@ Module Utilities
         End If
 
         If (Commentbox1 = True And CommentButton1 = True) Then
-            Console.WriteLine(Time & "Posted Comment")
             CommentsDone = CommentsDone + 1
+            Console.WriteLine(Time & "Posted Comment (" & CommentsDone & ")")
+            CommentPoster.Enabled = False
             NavigateToFirst.Enabled = True
         Else
             Console.WriteLine(Time & "Failed to post comment (Maybe disabled or error)")
@@ -155,20 +156,22 @@ Module Utilities
         Try
             Dim FollowButton As IWebElement = Bot.FindElement(By.XPath(FollowButton_1_XPath))
             FollowButton.Click()
-            Console.WriteLine(Time & "Followed Account (Try 1)")
             FollowsDone = FollowsDone + 1
+            Console.WriteLine(Time & "Followed Account (" & FollowsDone & ")")
         Catch
             Try 'Second Try
                 Dim FollowButton As IWebElement = Bot.FindElement(By.XPath(FollowButton_2_XPath))
                 FollowButton.Click()
-                Console.WriteLine(Time & "Followed Account (Try 2)")
                 FollowsDone = FollowsDone + 1
+                Console.WriteLine(Time & "Followed Account (" & FollowsDone & ")")
+
             Catch
                 Try 'Third Try
                     Dim FollowButton As IWebElement = Bot.FindElement(By.XPath(FollowButton_3_XPath))
                     FollowButton.Click()
-                    Console.WriteLine(Time & "Followed Account (Try 3)")
                     FollowsDone = FollowsDone + 1
+                    Console.WriteLine(Time & "Followed Account (" & FollowsDone & ")")
+
                 Catch ex As Exception
                     Console.WriteLine(Time & "Could not follow Account (collab-post maybe?)")
                 End Try
@@ -182,20 +185,19 @@ Module Utilities
             Dim LikeButton As IWebElement = Bot.FindElement(By.XPath(LikeButton_1_XPath))
             LikeButton.Click()
             LikesDone = LikesDone + 1
-            LikesDone = LikesDone + 1
-            Console.WriteLine(Time & "Liked post (Try 1)")
+            Console.WriteLine(Time & "Liked post (" & LikesDone & ")")
         Catch
             Try
                 Dim LikeButton As IWebElement = Bot.FindElement(By.XPath(LikeButton_2_XPath))
                 LikeButton.Click()
-                Console.WriteLine(Time & "Liked post (Try 2)")
                 LikesDone = LikesDone + 1
+                Console.WriteLine(Time & "Liked post (" & LikesDone & ")")
             Catch
                 Try
                     Dim LikeButton As IWebElement = Bot.FindElement(By.XPath(LikeButton_3_XPath))
                     LikeButton.Click()
-                    Console.WriteLine(Time & "Liked post (Try 3)")
                     LikesDone = LikesDone + 1
+                    Console.WriteLine(Time & "Liked post (" & LikesDone & ")")
                 Catch ex As Exception
                     Console.WriteLine(Time & "Could not like post")
                 End Try
@@ -222,7 +224,7 @@ Module Utilities
         Try
             If Bot.FindElement(By.XPath(Notify_XPath)).Displayed = True Then 'German version
                 Console.WriteLine(Time & "Notifywindow found")
-                Dim CookieButton As IWebElement = Bot.FindElement(By.XPath("//button[text()=" & ControlChars.Quote & "Jetzt nicht" & ControlChars.Quote & "]"))
+                Dim CookieButton As IWebElement = Bot.FindElement(By.XPath(Notify_XPath))
                 CookieButton.Click()
                 Console.WriteLine(Time & "Notifywindow destroyed")
             End If
