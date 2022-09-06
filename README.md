@@ -1,7 +1,9 @@
+![InstaReact Logo](https://i.imgur.com/PkR2Zdy.png "InstaReact Logo")
+
 # InstaReact
 InstaReact is a Selenium-based Console-Application for Like/Follow/Comment Automation on Instagram      
 
-![Console output](https://i.imgur.com/7WnGkcn.png "Console output")
+![Console output](https://i.imgur.com/6xNXnNs.png "Console output")
 
 ## Installation
 
@@ -41,6 +43,14 @@ This is only for the German users. You have to change these strings to your lang
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
 Please make sure to update tests as appropriate.
+
+## Changelogs
+
+**07.09.2022 (0.0.2a)**
+- Added a timeout if follow-button is not visible (because of collab-posts for example)
+- Fixed some small bugs
+- Added the InstaReact-Text on Launch
+- Shows how often the bot has liked/followed/commented yet
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
