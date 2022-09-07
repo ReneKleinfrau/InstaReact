@@ -32,12 +32,7 @@ In InstaReact.vb you can edit all settings easily
 ## How to update?
 
 In XPath.vb you can edit all XPaths to the elements. You can find them with your Browser in the developer-tools.
-
-## Nothing happens, what can I do?
-
-In XPath.vb you have to edit the last 3 XPaths to your language. You will see "Folgen" and "Jetzt nicht". 
-This is only for the German users. You have to change these strings to your language. "Folgen" is the text of the follow-button,
-"Jetzt nicht" is the button text of the Notification-PopUp.
+Or just wait for my updated XPaths.vb
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
