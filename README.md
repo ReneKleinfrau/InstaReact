@@ -46,11 +46,15 @@ Please make sure to update tests as appropriate.
 
 ## Changelogs
 
-**07.09.2022 (0.0.2a)**
+**06.09.2022 (0.0.2a)**
 - Added a timeout if follow-button is not visible (because of collab-posts for example)
 - Fixed some small bugs
 - Added the InstaReact-Text on Launch
 - Shows how often the bot has liked/followed/commented yet
+
+**08.09.2022 (0.0.3a)**
+- Added a check for the profile-folder on startup
+- Changed the xpaths from Germany to Global, so you don't have to edit them anymore
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
