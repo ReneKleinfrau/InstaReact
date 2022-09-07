@@ -16,7 +16,7 @@ In InstaReact.vb you can edit all settings easily
 ```vb.net
     Public UserNameInsta As String = ""
     Public PasswordInsta As String = ""
-    Private ProfileToUse As String = "Profilename" 'If you want to keep logged in, you can use chrome profiles
+    Private ProfileToUse As String = "Profilename" 'If you want to stay logged in, you can use chrome profiles
     Private DoLike As Boolean = True 
     Private DoFollow As Boolean = True
     Private DoComment As Boolean = True
@@ -55,6 +55,8 @@ Please make sure to update tests as appropriate.
 **08.09.2022 (0.0.3a)**
 - Added a check for the profile-folder on startup
 - Changed the xpaths from Germany to Global, so you don't have to edit them anymore
+
+[![German Tutorial](https://img.youtube.com/vi/ip15T-DBE7A/0.jpg)](https://www.youtube.com/watch?v=ip15T-DBE7A)
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
