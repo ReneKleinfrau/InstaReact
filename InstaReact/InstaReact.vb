@@ -38,7 +38,7 @@ Module InstaReact
     Public FollowsDone As Integer = 0
     Public CommentsDone As Integer = 0
     Public TimeOutTry As Integer = 0
-    Private HashTagToUse As String = "" 'Dont touch - Use The Comments() Array
+    Private HashTagToUse As String = "" 'Dont touch - Use The HashTags() Array
     Public Bot As IWebDriver
     Private AllOptions As New ChromeOptions
     Public Time As String = " " & DateTime.Now.ToString("dd/MM/yyyy HH:mm") & ": "
@@ -237,6 +237,9 @@ Module InstaReact
         CommentPoster.Interval = 3000
         AddHandler CommentPoster.Elapsed, AddressOf CommentPosterTick
 
+        If Not (My.Computer.FileSystem.DirectoryExists(My.Computer.FileSystem.CurrentDirectory & "\Profile")) Then
+            My.Computer.FileSystem.CreateDirectory(My.Computer.FileSystem.CurrentDirectory & "\Profile")
+        End If
 
         If (UseBlankProfile = True Or ProfileToUse = "") Then
         Else
@@ -278,7 +281,7 @@ Module InstaReact
         Console.WriteLine(" ╚═╝╚═╝  ╚═══╝╚══════╝   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝ ╚═════╝   ╚═╝   ")
         Console.WriteLine("")
         Console.ForegroundColor = ConsoleColor.Cyan
-        Console.WriteLine(" [V0.0.2a]InstaReact has been started")
+        Console.WriteLine(" [V0.0.3a]InstaReact has been started")
         Console.WriteLine(" --------------------------------------------------------------------")
         Console.ResetColor()
         Console.WriteLine(Time & "Bot is running...")
