@@ -258,7 +258,7 @@ Module Utilities
     ' Checks if the followbutton on a post is visible. You need to change the language if you are not German
     Public Function CheckIfFollowButtonIsVisible() As Boolean
         Try
-            If Bot.FindElement(By.XPath(FollowButton)).Displayed = True Then 'German version, you need to edit this
+             If Bot.FindElement(By.XPath(FollowButton_1_XPath)).Displayed = True Then
                 Return (True)
             Else
                 Return (False)
